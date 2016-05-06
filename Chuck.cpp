@@ -40,8 +40,8 @@ String Chuck::lightLed(int index) {
   return("");
 }
 
-void Chuck::lightSeveral(int *list, int width) {
-  for (int t = 0; t < float(sleep) / float(width); t++) {
+void Chuck::lightSeveral(int *list) {
+  for (int t = 0; t < float(sleep) / float(lights); t++) {
     for (int i = 0; i < lights; i++) {
       if (list[i] == 1) {
         Chuck::lightLed(i);

@@ -8,7 +8,7 @@ class Chuck {
     Chuck(int *pins, int pinCount);
     void resetPins();
     String lightLed(int index);
-    void lightSeveral(int *list, int width);
+    void lightSeveral(int *list);
     void wiring();
     void debug(bool toggle);
 
