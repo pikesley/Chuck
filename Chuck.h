@@ -5,7 +5,7 @@
 
 class Chuck {
   public:
-    Chuck(int *pins, int pinCount);
+    Chuck(int *pins, int pinCount, int sleep);
     void resetPins();
     String lightLed(int index);
     void lightSeveral(int *list);

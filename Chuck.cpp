@@ -1,11 +1,11 @@
 #include "Arduino.h"
 #include "Chuck.h"
 
-Chuck::Chuck(int *pins, int pinCount) {
+Chuck::Chuck(int *pins, int pinCount, int sleep) {
   _pins = pins;
   _pinCount = pinCount;
   lights = pow(_pinCount, 2) - _pinCount;
-  sleep = 200;
+  sleep = sleep;
   debugging = false;
 }
 
@@ -41,7 +41,7 @@ String Chuck::lightLed(int index) {
 }
 
 void Chuck::lightSeveral(int *list) {
-  for (int t = 0; t < float(sleep) / float(lights); t++) {
+  for (int t = 0; t < float(sleep) / (float(lights) * 2); t++) {
     for (int i = 0; i < lights; i++) {
       if (list[i] == 1) {
         Chuck::lightLed(i);
@@ -49,6 +49,8 @@ void Chuck::lightSeveral(int *list) {
       }
     }
   }
+  resetPins();
+
 }
 
 void Chuck::wiring() {
