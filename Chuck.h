@@ -11,10 +11,12 @@ class Chuck {
     void lightSeveral(int *list);
     void wiring();
     void debug(bool toggle);
+    void forwards();
+    void backwards();
 
-    bool debugging;
+    bool _debugging;
     int lights;
-    int sleep;
+    int _sleep;
 
   private:
     void inputise();
