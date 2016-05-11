@@ -1,17 +1,17 @@
 #include "Arduino.h"
 #include "Chuck.h"
 
-Chuck::Chuck(int *pins, int pinCount) {
+Chuck::Chuck(int *pins, int pinCount, int sleep) {
   _pins = pins;
   _pinCount = pinCount;
   lights = pow(_pinCount, 2) - _pinCount;
-  sleep = 200;
-  debugging = false;
+  _sleep = sleep;
+  _debugging = false;
 }
 
 void Chuck::debug(bool toggle) {
-  Chuck::debugging = toggle;
-  if (Chuck::debugging == true) {
+  Chuck::_debugging = toggle;
+  if (Chuck::_debugging == true) {
     Serial.begin(9600);
   }
 }
@@ -26,7 +26,7 @@ String Chuck::lightLed(int index) {
   int right = candidates[index % (_pinCount - 1)];
   setPins(left, right);
 
-  if (debugging) {
+  if (_debugging) {
     String s = String(index);
     s = String(s + ": [ ");
     s = String(s + _pins[left]);
@@ -40,12 +40,28 @@ String Chuck::lightLed(int index) {
   return("");
 }
 
+void Chuck::forwards() {
+  for (int i = 0; i < lights; i++) {
+    lightLed(i);
+    delay(_sleep);
+    resetPins();
+  }
+}
+
+void Chuck::backwards() {
+  for (int i = lights - 1; i >= 0; i--) {
+    lightLed(i);
+    delay(_sleep);
+    resetPins();
+  }
+}
+
 void Chuck::lightSeveral(int *list) {
-  for (int t = 0; t < float(sleep) / float(lights); t++) {
+  for (int t = 0; t < float(_sleep) / float(lights); t++) {
     for (int i = 0; i < lights; i++) {
       if (list[i] == 1) {
         Chuck::lightLed(i);
-        delay(1);
+      //  delay(0);
       }
     }
   }
